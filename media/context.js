@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
         vscode.postMessage({ command: 'switchToChat' });
     });
 
+
+    
+    
+
     // Constants and elements
     const addCodeContextButton = document.getElementById('addCodeContextButton');
     const addDocumentContextButton = document.getElementById('addDocumentContextButton');
@@ -37,27 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
             // Determine which GIF icon to use based on the context type
             switch (context.type) {
                 case 'file':
-                    iconSrc = '../resources/file.gif';
+                    iconSrc = '../resources/file.png';
                     break;
                 case 'directory':
-                    iconSrc = '../resources/directory.gif';
+                    iconSrc = '../resources/file.png';
                     break;
                 case 'code-block':
-                    iconSrc = '../resources/code-block.gif';
+                    iconSrc = '../resources/file.png';
                     break;
                 case 'tech-doc':
-                    iconSrc = '../resources/tech-doc.gif';
+                    iconSrc = '../resources/file.png';
                     break;
                 case 'req-doc':
-                    iconSrc = '../resources/req-doc.gif';
+                    iconSrc = '../resources/file.png';
                     break;
                 default:
-                    iconSrc = '../resources/default.gif';
+                    iconSrc = '../resources/file.png';
             }
 
             const listItem = document.createElement('li');
             listItem.innerHTML = `
-                <img src="" alt="✕" style="width: 20px;">
+                <img src={iconSrc} alt="context.type" style="width: 20px;">
                 ${context.name}
                 <span class="remove-context" data-index="${index}">✕</span>
             `;
@@ -215,3 +219,135 @@ async function uploadZipFile(file, projectName) {
         console.error("Error:", error);
     }
 }
+
+
+
+document.getElementById('addGitLabRepoLink').addEventListener('click', function() {
+    const inputBox = document.getElementById('gitLabInputBox');
+    inputBox.style.display = inputBox.style.display === 'none' || inputBox.style.display === '' ? 'block' : 'none';
+});
+
+document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('gitLabInputBox').style.display = 'none';
+});
+
+function closeInputBox() {
+    document.getElementById("gitLabInputBox").style.display = "none";
+  }
+
+ // Add an event listener for the submit button
+ document.getElementById("submitRepoLink").addEventListener("click", function() {
+    // Get the input values
+    const repoLink = document.getElementById('repoLink').value.trim();
+    const authToken = document.getElementById('authToken').value.trim();
+    const errorMessage = document.getElementById('errorMessage');
+    
+    // Reset error message
+    errorMessage.style.display = 'none';
+    errorMessage.textContent = '';
+      
+    // Basic validation
+    if (!isValidURL(repoLink)) {
+        errorMessage.textContent = 'Please enter a valid GitLab Repo URL.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+  
+      if (!authToken) {
+        errorMessage.textContent = 'Please enter a valid Auth Token.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+ // Function to validate if the URL is a valid GitLab repo link
+ function isValidURL(url) {
+    const pattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[a-zA-Z0-9._~:?#@!$&'()*+,;=%-]*)*\/?$/;
+    return pattern.test(url);
+  }
+  
+    // Call the backend API function (assuming it's defined in your services folder)
+    callGitLabAPI(repoLink, authToken)
+      .then(response => {
+        // Handle the response if necessary
+        console.log("API call successful:", response);
+        displayFileList(response.files);
+        // Close the input box after the API call
+        closeInputBox();
+      })
+      .catch(error => {
+        // Handle the error if the API call fails
+        console.error("Error calling API:", error);
+      });
+  });
+
+
+  // Function to handle the close button click for the file list box
+  function closeFileBox() {
+    document.getElementById("fileListBox").style.display = "none";
+  }
+
+// Add an event listener for the confirm selection button
+document.getElementById("confirmSelection").addEventListener("click", function() {
+    // Close the file list box when the button is clicked
+    closeFileBox();
+  });
+ // Function to display the file list with checkboxes
+ function displayFileList(files) {
+    const fileListContainer = document.getElementById("fileListContainer");
+    fileListContainer.innerHTML = ""; // Clear any existing content
+
+    files.forEach((file, index) => {
+      // Create checkbox and label for each file
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = `file-${index}`;
+      checkbox.value = file;
+
+      const label = document.createElement("label");
+      label.htmlFor = `file-${index}`;
+      label.textContent = file;
+
+      // Wrap the checkbox and label in a div
+      const fileDiv = document.createElement("div");
+      fileDiv.appendChild(checkbox);
+      fileDiv.appendChild(label);
+
+      fileListContainer.appendChild(fileDiv);
+    });
+
+    // Show the file list box
+    document.getElementById("fileListBox").style.display = "block";
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+///------------mock function for api call(to be rmeoved and use serivce )--------
+
+ // Example function for the API call (replace with your actual service function)
+ function callGitLabAPI(repoLink, authToken) {
+    // Mocking a response for now with a list of files (replace with your API call)
+    return new Promise((resolve) => {
+      const mockResponse = {
+        files: [
+          "file1.js", "file2.js", "file3.html", "file4.css", "file5.md",
+          "file6.py", "file7.java", "file8.ts", "file9.json", "file10.xml"
+        ]
+      };
+      setTimeout(() => resolve(mockResponse), 500); // Simulate API response time
+    });
+  }
+
+
+//----------mock data ----------
+
+//glpat-rMUjM6Sm9CWxjzD9UdPs
+//https://gitlab.valuebound.net/aakash.tembhare/lstn_rnn_next_word_prediction

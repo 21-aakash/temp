@@ -18,23 +18,13 @@ export async function handleFixCode(): Promise<void> {
                 if (lines[lines.length - 1].startsWith('```')) lines.pop();
 
                 const trimmedSuggestedFix = lines.join('\n').trim();
-                suggestedFix = trimmedSuggestedFix;
 
-                // Show popup with suggested fix
-                const action = await vscode.window.showInformationMessage(
-                    `Suggested fix:\n${suggestedFix}`,
-                    'Accept', 'Reject'
-                );
+                // Directly apply the fix in the editor without showing a popup
+                await editor.edit(editBuilder => {
+                    editBuilder.replace(editor.selection, trimmedSuggestedFix);
+                });
 
-                if (action === 'Accept') {
-                    // Apply the fix in the editor
-                    editor.edit(editBuilder => {
-                        editBuilder.replace(editor.selection, suggestedFix);
-                    });
-                    vscode.window.showInformationMessage('Code fix applied.');
-                } else {
-                    vscode.window.showInformationMessage('Code fix rejected.');
-                }
+                vscode.window.showInformationMessage('Code fix applied.');
             } catch (error) {
                 vscode.window.showErrorMessage('Failed to get a fix from Groq AI.');
                 console.error(error);

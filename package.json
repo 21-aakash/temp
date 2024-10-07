@@ -1,6 +1,6 @@
 {
   "name": "ai-chat",
-  "displayName": "AI Chat",
+  "displayName": "CHATBOT",
   "version": "0.0.2",
   "description": "An AI chat interface inside VS Code",
   "engines": {
@@ -32,7 +32,7 @@
       "aiChat": [
         {
           "id": "aiChat.chatPanel",
-          "name": "AI Chat Panel",
+          "name": "",
           "type": "webview"
         }
       ]
@@ -168,6 +168,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "groq-sdk": "^0.7.0",
     "highlight.js": "^11.10.0",
