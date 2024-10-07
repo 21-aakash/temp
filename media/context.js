@@ -349,5 +349,5 @@ document.getElementById("confirmSelection").addEventListener("click", function()
 
 //----------mock data ----------
 
-//glpat-rMUjM6Sm9CWxjzD9UdPs
+
 //https://gitlab.valuebound.net/aakash.tembhare/lstn_rnn_next_word_prediction
