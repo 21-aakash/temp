@@ -12,7 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.window.registerWebviewViewProvider(ChatPanel.viewType, chatProvider)
     );
-
+    
+  
      
     const codeGenerator = new CodeGenerator(context.extensionUri);
     activateCodeSuggestionListener();
@@ -67,7 +68,8 @@ export function activate(context: vscode.ExtensionContext) {
             insertCodeBlock(codeBlock);
         })
     );
-    
+
+
 
     vscode.window.registerWebviewViewProvider('ChatPanel.viewType', {
         resolveWebviewView: (webviewView) => {

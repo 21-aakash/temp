@@ -65,3 +65,41 @@ export class ChatPanel implements vscode.WebviewViewProvider {
     }
 }
 
+
+
+
+     
+    // Method to send the folder as a zip (dummy implementation for now)
+    private async _sendFolderAsZip(folderPath: string) {
+        // Implement API call logic here
+        console.log(`Sending folder at ${folderPath} as a zip...`);
+    
+        const zipFilePath = path.join(folderPath, 'project.zip');
+        const output = fs.createWriteStream(zipFilePath);
+        const archive = archiver('zip', {
+            zlib: { level: 9 }
+        });
+    
+        archive.pipe(output);
+        archive.directory(folderPath, false);
+        await archive.finalize();
+    
+        // Send zip file to backend
+        const zipContent = fs.readFileSync(zipFilePath);
+         
+        return zipContent;
+        
+
+
+        await axios.post('your-api-endpoint', zipContent, {
+            headers: {
+                'Content-Type': 'application/zip'
+            }
+        });
+    
+    
+        
+    
+    
+    
+    }

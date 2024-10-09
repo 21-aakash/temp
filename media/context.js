@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Contexts saved to JSON:', jsonData);
     }
 
+
+   
+
     // Helper function to render context items
     function renderContexts() {
         fileList.innerHTML = '';
@@ -242,6 +245,13 @@ function closeInputBox() {
     const authToken = document.getElementById('authToken').value.trim();
     const errorMessage = document.getElementById('errorMessage');
     
+    const gitLabInputBox = document.getElementById('gitLabInputBox');
+    const loader = document.getElementById('loader');
+    const inputBoxContent = document.querySelector('.input-box-content');
+
+    // Show the loader and add blur effect
+    loader.style.display = 'block';
+    inputBoxContent.classList.add('blur-effect');
     // Reset error message
     errorMessage.style.display = 'none';
     errorMessage.textContent = '';
@@ -267,17 +277,27 @@ function closeInputBox() {
   
     // Call the backend API function (assuming it's defined in your services folder)
     callGitLabAPI(repoLink, authToken)
-      .then(response => {
-        // Handle the response if necessary
-        console.log("API call successful:", response);
-        displayFileList(response.files);
-        // Close the input box after the API call
-        closeInputBox();
-      })
-      .catch(error => {
-        // Handle the error if the API call fails
-        console.error("Error calling API:", error);
-      });
+    .then(response => {
+      // Handle the response if necessary
+      console.log("API call successful:", response);
+      displayFileList(response.files);
+      
+      // Close the input box after the API call
+      closeInputBox();
+    })
+    .catch(error => {
+      // Handle the error if the API call fails
+      console.error("Error calling API:", error);
+    })
+    .finally(() => {
+      // Hide the loader when the API call is complete
+      loader.style.display = 'none';
+      inputBoxContent.classList.remove('blur-effect');
+    });
+
+
+
+      
   });
 
 
@@ -286,11 +306,6 @@ function closeInputBox() {
     document.getElementById("fileListBox").style.display = "none";
   }
 
-// Add an event listener for the confirm selection button
-document.getElementById("confirmSelection").addEventListener("click", function() {
-    // Close the file list box when the button is clicked
-    closeFileBox();
-  });
  // Function to display the file list with checkboxes
  function displayFileList(files) {
     const fileListContainer = document.getElementById("fileListContainer");
@@ -319,6 +334,59 @@ document.getElementById("confirmSelection").addEventListener("click", function()
     document.getElementById("fileListBox").style.display = "block";
   }
 
+//-----------------confirm selection----------------
+  document.getElementById('confirmSelection').addEventListener('click', () => {
+    const fileListBox = document.getElementById('fileListBox');
+    const fileBoxContent = document.querySelector('.file-box-content');
+
+    // Create and show the loader
+    const loader = document.createElement('div');
+    loader.className = 'centered-loader';
+    fileListBox.appendChild(loader);
+
+    // Disable the content while the loader is visible
+    fileBoxContent.classList.add('blur-effect');
+
+    // Call the backend API function (assuming it's defined in your services folder)
+    callApiForFileSelection()
+        .then(response => {
+            // Remove the loader once the response is received
+            loader.remove();
+            fileBoxContent.classList.remove('blur-effect');
+
+            // Show success message with a checkmark
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.innerHTML = `
+                <div class="success-icon"></div>
+                <span>Done!</span>
+            `;
+            fileListBox.appendChild(successMessage);
+            successMessage.style.display = 'block';
+
+            // Hide the success message after 2 seconds
+            setTimeout(() => {
+                successMessage.remove();
+              //  closeFileBox(); // Close the file box or perform any other action you need
+            }, 2000);
+        })
+        .catch(error => {
+            // Handle the error if the API call fails
+            console.error("Error in file selection API:", error);
+            loader.remove();
+            fileBoxContent.classList.remove('blur-effect');
+        });
+});
+
+function callApiForFileSelection() {
+    // Simulate an API call with a promise for demonstration purposes
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ success: true });
+        }, 2000); // Simulated API delay of 2 seconds
+    });
+}
+
 
 
 
@@ -338,11 +406,52 @@ document.getElementById("confirmSelection").addEventListener("click", function()
     return new Promise((resolve) => {
       const mockResponse = {
         files: [
-          "file1.js", "file2.js", "file3.html", "file4.css", "file5.md",
-          "file6.py", "file7.java", "file8.ts", "file9.json", "file10.xml"
+            "src/components/userAuthentication/loginFormComponent.js",
+            "src/components/userAuthentication/logoutButtonComponent.js",
+            "src/components/navigation/mainNavigationBar.js",
+            "src/utils/dataProcessing/dataCleanerModule.js",
+            "src/utils/dataProcessing/dataValidatorModule.js",
+            "src/utils/api/apiRequestHandler.js",
+            "src/index/mainEntryPoint.html",
+            "src/styles/globalStyles/mainStyles.css",
+            "src/styles/globalStyles/themeStyles.css",
+            "src/docs/README/introductionToProject.md",
+            "src/docs/README/gettingStartedGuide.md",
+            "src/services/dataAnalysis/userBehaviorAnalysis.py",
+            "src/models/userProfile/customerProfileModel.java",
+            "src/types/typescript/interfaces/userInterface.ts",
+            "src/types/typescript/types/productTypes.ts",
+            "src/config/appConfigurations/configurations.json",
+            "src/xml/userManual/userGuideDocumentation.xml",
+            "src/database/employeeDatabaseSchema/employeeSchema.sql",
+            "src/data/sampleData/transactionHistorySampleData.csv",
+            "src/docs/productDocumentation/productDetailsDocumentation.json",
+            "src/docs/setupInstructions/serverSetupInstructions.txt",
+            "src/algorithms/imageProcessing/imageResizingAlgorithm.py",
+            "src/algorithms/imageProcessing/imageFilteringAlgorithm.py",
+            "src/styles/customStyles/specialButtonStyles.scss",
+            "src/docs/apiDocumentation/apiEndpointsDocumentation.md",
+            "src/plans/projectPlan/projectMilestonePlanning.docx",
+            "src/tests/unitTests/userComponentTests.spec.js",
+            "src/diagrams/systemArchitecture/systemArchitectureDiagram.png",
+            "src/controllers/userController/userProfileController.js",
+            "src/controllers/productController/productManagementController.js",
+            "src/middleware/authMiddleware/jwtAuthenticationMiddleware.js",
+            "src/routes/apiRoutes/userApiRoutes.js",
+            "src/routes/apiRoutes/productApiRoutes.js",
+            "src/hooks/customHooks/useFetchData.js",
+            "src/hooks/customHooks/useLocalStorage.js",
+            "src/assets/images/profilePictures/userProfilePicture.png",
+            "src/assets/fonts/customFonts/fontAwesomeIcons.woff",
+            "src/initializers/appInitializer/applicationSetup.js",
+            "src/reducers/userReducer/userProfileReducer.js",
+            "src/store/configureStore/storeConfiguration.js",
+            "src/constants/errorMessages/generalErrorMessages.js",
+            "src/constants/apiEndpoints/apiEndpointConstants.js"
         ]
+        
       };
-      setTimeout(() => resolve(mockResponse), 500); // Simulate API response time
+      setTimeout(() => resolve(mockResponse), 6000); // Simulate API response time
     });
   }
 

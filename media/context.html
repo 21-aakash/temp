@@ -36,8 +36,10 @@
 
   <!-- Collapsible Input Box -->
 <div id="gitLabInputBox" class="input-box">
+ 
+  <div style="display: none;" id="loader" class="loader"></div>
   <div class="input-box-content">
-      <span class="close">&times;</span>
+      <span  style="display: none;" class="close">&times;</span>
       <h3>Add GitLab Repo Link</h3>
       <form>
         <div id="errorMessage" style="color: red; display: none; margin-bottom: 10px;"></div>
@@ -50,20 +52,26 @@
           
           <button type="button" id="submitRepoLink">Submit</button>
       </form>
+
+
+       
+    
   </div>
 </div>
 
 
 <!-- File List Box -->
 <div id="fileListBox" class="file-box" style="display: none;">
+  
   <div class="file-box-content">
       <span class="close" onclick="closeFileBox()" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">&times;</span>
       <h3>Select Files for Context</h3>
       <div id="fileListContainer">
         <!-- Checkboxes for files will be inserted here -->
       </div>
-      <button type="button" id="confirmSelection">Confirm Selection</button>
+      <button type="button" id="confirmSelection">Done</button>
   </div>
+ 
 </div>
 
 
@@ -73,8 +81,8 @@
     <button id="addDocumentContextButton" class="context-button">Add Document Context +</button>
    
     <div id="documentContextDropdown" class="dropdown">
-      <button id="addTechDocContext">Add Technical Document</button>
-      <button id="addReqDocContext">Add Requirement Document</button>
+      <button id="addTechDocContext">Technical Document</button>
+      <button id="addReqDocContext">Requirement Document</button>
       
     </div>
 

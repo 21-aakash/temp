@@ -59,7 +59,7 @@
         input, button {
             width: 100%;
             padding: 8px;
-            font-size: 16px;
+            font-size: 12px;
             border-radius: 5px;
             border: 1px solid #555;
             margin-top: 5px;
@@ -109,6 +109,46 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Basic styling for the input group */
+.files {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px; /* Reduced margin */
+ 
+    font-size: 12px; /* Smaller font size */
+}
+
+/* Styling the label */
+.files label {
+    margin-right: 8px; /* Reduced margin */
+    font-size: 12px; /* Smaller font size */
+    color: #c0c0c0;
+    /* Lighter weight for small size */
+}
+
+/* Styling the dropdown */
+.files select {
+    height: 20px;
+    width: 70px;
+    padding: 3px; /* Reduced padding */
+    font-size: 12px; /* Smaller font size */
+    border-radius: 3px; /* Smaller border radius */
+    border: 1px solid #5A72A0;
+    background-color: #000000;
+
+    color: #cbcaca;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Dropdown focus/hover state for better appearance */
+.files select:focus,
+.files select:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(0, 123, 255, 0.2); /* Lighter shadow */
+    outline: none;
+}
+
     </style>
 </head>
 <body>
@@ -120,21 +160,29 @@
             <!-- Add your GIF URL here -->
             <img src="https://i.gifer.com/LCPT.gif" alt="Welcome GIF">
         </div>
-        <div class="welcome-message">
-            LASK.AI
-        </div>
-        <div class="instruction">
-            
+      
+    <div class="welcome-message">
+        LASK.AI™
+    </div>
+
+
+        <div class="input-group">
+            <label for="project-name">Project Name:</label>
+            <input type="text" id="project-name" placeholder="Enter project name" required>
         </div>
         <div class="input-group">
-            <label for="project-name">Project Name</label>
-            <input type="text" id="project-name" placeholder="Enter project name">
+            <label for="user-name">User Name: </label>
+            <input type="text" id="user-name" placeholder="Enter user name" required>
         </div>
         <div class="input-group">
-            <label for="folder-location">Project Folder</label>
-            <button id="select-folder">-- Select Folder --</Select></button>
+            <span class="files">
+                <label for="folder-dropdown">Existing Projects:</label>
+                <select id="folder-dropdown" required></select>
+            </span>
+            <button id="select-folder">-- Select new --</button>
             <p id="folder-path">No folder selected</p>
         </div>
+        
         <button id="submit">Start</button>
         <div class="loader" id="loader"></div>
     </div>
@@ -142,6 +190,57 @@
     <script>
         const vscode = acquireVsCodeApi();
         
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Array of folder options
+    const folderArray = ['Folder1', 'Folder2', 'Folder3', 'Folder4'];
+    
+    // Get the dropdown element
+    const dropdown = document.getElementById('folder-dropdown');
+
+    // Populate dropdown with options from folderArray
+    folderArray.forEach(folder => {
+        const option = document.createElement('option');
+        option.value = folder;
+        option.textContent = folder;
+        dropdown.appendChild(option);
+    });
+
+    dropdown.style.display = 'inline-block';
+});
+//         document.getElementById('select-folder').addEventListener('click', function() {
+//     // Array of folder options
+//     const folderArray = ['Folder1', 'Folder2', 'Folder3', 'Folder4'];
+    
+//     // Get the dropdown element
+//     const dropdown = document.getElementById('folder-dropdown');
+
+//     // Clear any existing options
+//     dropdown.innerHTML = '';
+
+//     // Populate dropdown with options from folderArray
+//     folderArray.forEach(folder => {
+//         const option = document.createElement('option');
+//         option.value = folder;
+//         option.textContent = folder;
+//         dropdown.appendChild(option);
+//     });
+
+//     // Show the dropdown
+//     dropdown.style.display = 'inline-block';
+// });
+
+// Event listener for when the user selects an option from the dropdown
+document.getElementById('folder-dropdown').addEventListener('change', function() {
+    const selectedFolder = this.value;
+    document.getElementById('folder-path').textContent = `Selected folder: ${selectedFolder}`;
+});
+
+
+
+
+
+
         // Handle folder selection
         document.getElementById('select-folder').addEventListener('click', () => {
             vscode.postMessage({ command: 'selectFolder' });
@@ -150,16 +249,18 @@
         // Handle submit button
         document.getElementById('submit').addEventListener('click', () => {
             const projectName = document.getElementById('project-name').value;
+            const userName = document.getElementById('user-name').value;
             const folderPath = document.getElementById('folder-path').textContent;
 
-            if (projectName && folderPath !== 'No folder selected') {
+            if (userName && projectName && folderPath !== 'No folder selected') {
                 // Show the loader
                 document.getElementById('loader').style.display = 'block';
                 
                 vscode.postMessage({
                     command: 'submitProject',
                     projectName: projectName,
-                    folderPath: folderPath
+                    folderPath: folderPath,
+                    userName: userName
                 });
             } else {
                 alert('Please fill in all fields.');

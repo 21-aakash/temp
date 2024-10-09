@@ -2,7 +2,7 @@ const vscode = acquireVsCodeApi();
 
 // Show the .messages class only when the user clicks on send button
 document.getElementById("sendButton").addEventListener("click", function () {
-  document.querySelector(".messages").style.display = "flex";
+  document.querySelector(".messages").style.display = "block";
 });
 
 // Hide the .to-hide class and increase chat container height on send button click
@@ -42,19 +42,20 @@ function createMessageHTML(message) {
 }
 
 
-
-
 // Function to display messages in the chat window
 function addMessage(sender, text, isAI = false) {
   const messagesDiv = document.getElementById("messages");
 
- 
+  // Create the container div for the icon and message
+  const messageContainer = document.createElement("div");
+  messageContainer.classList.add("message-container", isAI ? "ai-message" : "user-message");
+
   // Create the icon element
   const iconElement = document.createElement("img");
-
+  iconElement.classList.add("icon");
   iconElement.src = isAI ? "https://cdn-icons-png.flaticon.com/512/10881/10881863.png" : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
   iconElement.alt = isAI ? "LASK" : "User";
-  iconElement.classList.add(isAI ? "ai-icon" : "user-icon");
+
   // Create the message element
   const messageElement = document.createElement("div");
   messageElement.classList.add("message", isAI ? "ai-message" : "user-message");
@@ -80,7 +81,7 @@ function addMessage(sender, text, isAI = false) {
 
     const readLessLink = document.createElement("button");
     readLessLink.textContent = "Read Less";
-    readLessLink.classList.add("read-less-button");
+    readLessLink.classList.add("read-more-button");
     readLessLink.style.display = "none";
 
     readMoreLink.onclick = () => {
@@ -106,11 +107,12 @@ function addMessage(sender, text, isAI = false) {
   }
 
   // Append the icon and message element to the container
-  messageElement.appendChild(iconElement);
-  
+  messageContainer.appendChild(iconElement);
+  messageContainer.appendChild(messageElement);
 
   // Add the container to the messages div
-  messagesDiv.appendChild(messageElement);
+  messagesDiv.appendChild(messageContainer);
+
 
 
 
@@ -134,6 +136,7 @@ function addMessage(sender, text, isAI = false) {
         });
     };
 
+  
 
     // Create the Insert button
     const insertButton = document.createElement("button");
@@ -167,48 +170,21 @@ function insertAtCursor(text) {
   input.selectionStart = input.selectionEnd = start + text.length; // Move the cursor after the inserted text
 }
 
-
-
-
 // Listen for messages from the extension
-window.addEventListener('message', (event) => {
+window.addEventListener("message", (event) => {
   const message = event.data;
-  
-  console.log("Message received in chat.js: ", message);
-
   switch (message.command) {
-  //   case 'initializeChat':
-  //     // When the chat is initialized, load chat history
-  //     const chatHistory = message.chatHistory;
-
-  //     chatHistory.forEach(chat => {
-  //       console.log("Chat: ", chat);
-  //         // Mark AI responses with isAI = true
-  //     if (chat.sender === 'AI') {
-  //       chat.text = `<pre><code>${chat.text}</code></pre>`;
-  //       Prism.highlightAll();
-  //     }
-  //       addMessage(chat.sender, chat.text, chat.isAI);
-  //     });
-  //     break;
-
-    case 'addMessage':
-      // Mark AI responses with isAI = true
-      if (message.sender === 'AI') {
-        message.text = `<pre><code>${message.text}</code></pre>`;
+    case "addMessage":
+      //Mark AI responses with isAI = true
+      if (message.sender === "AI") {
+        message.text = "<pre><code>" + message.text + "</code></pre>";
         Prism.highlightAll();
       }
 
-      addMessage(message.sender, message.text, message.sender === 'AI');
-      break;
-
-    default:
-      console.warn("Unknown command received: ", message.command);
+      addMessage(message.sender, message.text, message.sender === "AI");
       break;
   }
 });
-
-
 
 // Add event listeners for the send button and allow sending messages via the "Enter" key
 document.getElementById("sendButton").addEventListener("click", sendMessage);

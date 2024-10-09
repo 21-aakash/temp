@@ -265,20 +265,210 @@ body {
 }
 
 .file-box {
+
     position: relative;
     background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px #0000004d;
     min-width: 200px; /* Minimum width */
     max-width: calc(100% - 20px);
+   
 }
 
 .file-box-content {
     position: relative;
+    
 }
 
-.close {
-    font-size: 24px;
+
+#fileListContainer {
+    max-height: 200px; /* Set a maximum height for the container */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    border: 1px solid #1e1e1e; /* Optional: Add a border for visibility */
+    padding: 10px; /* Optional: Add padding for aesthetics */
+    background-color: #1e1e1e; /* Optional: Light background color */
+    font-family: Arial, sans-serif; /* Set font for better readability */
+  }
+  
+  #fileListContainer div {
+    white-space: normal; /* Allow text to wrap to the next line */
+    word-wrap: break-word; /* Break long words if necessary */
+    margin-bottom: 5px; /* Optional: Add space between file entries */
+  }
+
+ 
+
+#confirmSelection {
+    background-color: #4f7bbc;
     color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px 10px;
+    margin-top: 10px;
+}
+
+  
+.close {
+    font-size: 18px;
+    color: rgb(216, 213, 213);
+}
+
+#gitLabInputBox .input-box {
+    position: relative;
+}
+
+
+
+
+/* Outer Circle (Loader) */
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 1s linear infinite;
+    z-index: 10;
+}
+
+/* Inner Circle */
+.loader:after {
+    content: '';
+    position: absolute;
+    width: 30px; /* Smaller than the outer circle */
+    height: 30px; /* Smaller than the outer circle */
+    border: 3px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: scaleUp 1s linear infinite;
+}
+
+/* Keyframes for the outer circle animation */
+@keyframes pulse {
+    0%, 60%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Keyframes for the inner circle animation */
+@keyframes scaleUp {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    60%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Blur effect for the background */
+.blur-effect {
+    filter: blur(4px);
+    opacity: 0.4; /* Adjust opacity for a faded effect */
+    pointer-events: none; /* Prevent interaction with blurred elements */
+}
+
+
+
+
+/* Success message with checkmark */
+.success-message {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: green;
+    text-align: center;
+
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.success-icon {
+    display: inline-block;
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    border: 2px solid green;
+    border-radius: 50%;
+    position: relative;
+}
+
+.success-icon::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: 8px;
+    height: 14px;
+    border-right: 2px solid green;
+    border-bottom: 2px solid green;
+    transform: rotate(45deg);
+}
+/* Outer Circle (Loader) */
+.centered-loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 1s linear infinite;
+    z-index: 10;
+}
+
+/* Inner Circle */
+.centered-loader:after {
+    content: '';
+    position: absolute;
+    width: 30px; /* Smaller than the outer circle */
+    height: 30px; /* Smaller than the outer circle */
+    border: 3px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: scaleUp 1s linear infinite;
+}
+
+/* Keyframes for the outer circle animation */
+@keyframes pulse {
+    0%, 60%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Keyframes for the inner circle animation */
+@keyframes scaleUp {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    60%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
