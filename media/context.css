@@ -73,7 +73,7 @@ body {
 }
 
 .tab:hover {
-    background-color: #005a9c; /* Darker shade on hover */
+    background-color: #7db3ed; /* Darker shade on hover */
 }
 
 
@@ -109,7 +109,7 @@ body {
 }
 
 .context-button {
-    background-color: #007ACC; /* Button background */
+    background-color: #4f7bbc; /* Button background */
     color: #ffffff; /* Button text color */
     border: none;
     border-radius: 5px;
@@ -121,7 +121,7 @@ body {
 }
 
 .context-button:hover {
-    background-color: #005a9c; /* Darker shade on hover */
+    background-color: #4169a5; /* Darker shade on hover */
     transform: translateY(-2px); /* Lift effect on hover */
 }
 
@@ -142,7 +142,7 @@ body {
 }
 
 .dropdown button:hover {
-    background-color: #005a9c; /* Darker shade on hover */
+    background-color: #4f7bbc; /* Darker shade on hover */
 }
 
 .context-list {

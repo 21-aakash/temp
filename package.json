@@ -23,8 +23,8 @@
       "activitybar": [
         {
           "id": "aiChat",
-          "title": "AI Chat",
-          "icon": "resources/chat-icon.svg"
+          "title": "CHATBOT",
+          "icon": "resources/Asset 3.png"
         }
       ]
     },
@@ -155,6 +155,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@types/archiver": "^6.0.2",
     "@types/highlight.js": "^10.1.0",
     "@types/marked": "^6.0.0",
     "@types/node": "20.x",
@@ -168,6 +169,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "archiver": "^7.0.1",
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "groq-sdk": "^0.7.0",

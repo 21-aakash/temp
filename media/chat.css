@@ -1,7 +1,9 @@
+
 body {
     margin: 0;
     padding: 0;
     display: flex;
+    min-width:250px;
     flex-direction: column;
     align-items: center;
     
@@ -11,29 +13,6 @@ body {
     color: #c0c0c0; /* White text color */
 }
 
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Adjusted to fill the viewport */
-}
-
-.messages {
-    flex-grow: 1;
-    display: none;
-    overflow-y: auto; /* Changed to auto for a better experience */
-    padding: 15px;
-    border: 1px solid #444; /* Darker border */
-    border-radius: 8px; /* Rounded corners */
-    background-color: #2a2a2a; /* Container background */
-
-  width: 100%;
-  
-    
-    
-    
-    word-wrap: break-word;
-
-}
 
 
 
@@ -126,7 +105,7 @@ body {
 /* Read More and Read Less button style */
 .read-more-button {
     background: none; /* No background */
-    color: #007BFF; /* Standard blue color for visibility and engagement */
+    color: #7db3ed; /* Standard blue color for visibility and engagement */
     border: none; /* No border */
     font-size: 12px; /* Adequate size for readability */
     cursor: pointer; /* Pointer cursor to indicate it's clickable */
@@ -142,6 +121,60 @@ body {
 }
 
 
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Adjusted to fill the viewport */
+    
+}
+
+.messages {
+    flex-grow: 1;
+    display: none;
+    overflow-y: auto; /* Changed to auto for a better experience */
+   
+
+    background-color: #2a2a2a; /* Container background */
+
+    width: 100%;
+    height: 70vh;
+  
+    word-wrap: break-word;
+
+}
+
+.message-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.message-container.ai-message {
+    flex-direction: row; /* Icon on the left */
+}
+
+.message-container.user-message {
+    flex-direction: row-reverse; /* Icon on the right */
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px; /* Space between the icon and the message */
+    border-radius: 50%; /* Make it circular if using profile-like icons */
+}
+
+.message {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 8px;
+    /* Background color for message */
+    color: white;
+}
+
+
+
 .input-container {
     flex-grow: 1;
     margin-top: 15px;
@@ -153,7 +186,10 @@ body {
     background-color: #1e1e1e; /* Dark background for contrast */
     border-radius: 8px; /* Rounded container */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-}
+    height: 60px;
+    max-height: 60px;
+
+   }
 
 
 .input-container button.action {
@@ -172,6 +208,8 @@ body {
     background-color: #505050; /* Slightly lighter on hover */
     transform: translateY(-2px); /* Subtle lift effect */
 }
+
+
 
 textarea#messageInput {
     flex-grow: 1;
@@ -206,7 +244,7 @@ textarea#messageInput:focus {
  .send-buttons button {
     margin-top: 6px;
     padding: 8px 12px;
-    background-color:#0056b3;
+    background-color:#4f7bbc;
     color: white;
     border: none;
     border-radius: 5px;
@@ -216,7 +254,7 @@ textarea#messageInput:focus {
 }
 
  .send-buttons button:hover {
-    background-color: #064384; /* Darker green on hover */
+    background-color: #6191d7; /* Darker green on hover */
     transform: translateY(-2px); /* Lift effect on hover */
 }
 
@@ -320,7 +358,7 @@ textarea#messageInput:focus {
 }
 
 .tab:hover {
-    background-color: #005a9c; /* Darker shade on hover */
+    background-color: #6798e1; /* Darker shade on hover */
 }
 
 .action-buttons {
@@ -328,9 +366,38 @@ textarea#messageInput:focus {
     justify-content: flex-end;
     padding: 5px 10px;
 }
-.action-buttons  button {
-    background-color:#1e1e1e
+
+.action-buttons .history {
+    display: flex;
+    align-items: center;
+    gap: 2px; /* Optional: You can adjust or remove this */
+    background-color: #1e1e1e;
+    color: #c0c0c0;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
 }
+
+.action-buttons .action {
+    background-color: #1e1e1e;
+    color: #c0c0c0;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-buttons img {
+    width: 15px;
+    height: 15px;
+    filter: brightness(0) invert(1);
+    margin-right: 0; /* Remove any margin */
+}
+
+
+
+
 
 .action {
     margin-left: 10px;
@@ -349,27 +416,43 @@ textarea#messageInput:focus {
 .welcome-content h1 {
     font-size: 1.25em;
 }
+.welcome-content a{
 
-.action-list {
-    display: flex;
-    flex-direction: column;
+
+    color: #83B4FF;
+}
+
+.action-listt {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 15px; /* Space between grid items */
     padding: 15px;
-   
+    margin-bottom: 40px;
 }
 
-.action-item {
-    margin: 5px 0;
-    padding: 5px;
-   
-     /* Action item background */
-    
-    color:#388be4;
+.action-itemm {
+    padding: 15px;
+    text-align: center;
+    color: #83B4FF;
     cursor: pointer;
-    background-color:#292929 ;
-    border-radius: 40px  #9fcef0; /* Rounded corners */;
-   
-
+    background-color: #363636;
+    border-radius: 8px; /* Rounded corners */
+    border:#363636 1px solid; ;
+ /* Border color */
+    font-size: 14px;
+    height: 60px; /* Fixed height for rectangular size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
 }
+
+
+.action-itemm:hover {
+    background-color: #3a3a3a;
+}
+
 
 .shortcut-buttons {
     display: flex;
@@ -380,7 +463,7 @@ textarea#messageInput:focus {
 .shortcut {
     margin: 0 5px;
     padding: 5px;
-    background-color: #555; /* Shortcut button background */
+    background-color: #555; 
     color: #fff;
     border: none;
     cursor: pointer;

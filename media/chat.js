@@ -47,17 +47,28 @@ function createMessageHTML(message) {
 // Function to display messages in the chat window
 function addMessage(sender, text, isAI = false) {
   const messagesDiv = document.getElementById("messages");
+
+  // Create the container div for the icon and message
+  const messageContainer = document.createElement("div");
+  messageContainer.classList.add("message-container", isAI ? "ai-message" : "user-message");
+
+  // Create the icon element
+  const iconElement = document.createElement("img");
+  iconElement.classList.add("icon");
+  iconElement.src = isAI ? "https://cdn-icons-png.flaticon.com/512/10881/10881863.png" : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+  iconElement.alt = isAI ? "LASK" : "User";
+
+  // Create the message element
   const messageElement = document.createElement("div");
   messageElement.classList.add("message", isAI ? "ai-message" : "user-message");
 
   const fullTextNode = createMessageHTML(text); // Properly handle HTML content
 
   // Check if the text is too long (over 4 lines or 200 characters) and add "Read More" functionality
-  const isLongMessage =
-    text.split(/\r\n|\r|\n/).length > 4 || text.length > 200; // Adjust as needed
+  const isLongMessage = text.split(/\r\n|\r|\n/).length > 4 || text.length > 200;
   if (isLongMessage) {
-    const shortText = text.substring(0, 200); // Display first 200 characters
-    const shortTextNode = createMessageHTML(`${shortText}...`); // Properly handle HTML content
+    const shortText = text.substring(0, 200);
+    const shortTextNode = createMessageHTML(`${shortText}...`);
 
     const shortTextElement = document.createElement("span");
     shortTextElement.append(...shortTextNode);
@@ -73,7 +84,7 @@ function addMessage(sender, text, isAI = false) {
     const readLessLink = document.createElement("button");
     readLessLink.textContent = "Read Less";
     readLessLink.classList.add("read-more-button");
-    readLessLink.style.display = "none"; // Initially hide the "Read Less" button
+    readLessLink.style.display = "none";
 
     readMoreLink.onclick = () => {
       shortTextElement.style.display = "none";
@@ -94,8 +105,16 @@ function addMessage(sender, text, isAI = false) {
     messageElement.appendChild(readLessLink);
     messageElement.appendChild(fullTextElement);
   } else {
-    messageElement.append(...fullTextNode); // Display the full message
+    messageElement.append(...fullTextNode);
   }
+
+  // Append the icon and message element to the container
+  messageContainer.appendChild(iconElement);
+  messageContainer.appendChild(messageElement);
+
+  // Add the container to the messages div
+  messagesDiv.appendChild(messageContainer);
+
 
   // Add Copy and Insert buttons for AI messages
   if (isAI) {

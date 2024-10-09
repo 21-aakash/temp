@@ -10,7 +10,8 @@
 </head>
 <body>
     <div class="header">
-        <span class="logo">LASK.ai</span>
+        <span class="logo">
+            <img src="" alt="">LASK.ai</span>
         <div class="icons">
             <img src="https://i.pinimg.com/originals/07/66/d1/0766d183119ff92920403eb7ae566a85.png" alt="Profile" id="profileIcon" alt="Profile" class="icon" />
             <img src="https://cdn-icons-png.flaticon.com/512/4873/4873245.png" alt="Info" class="icon" />
@@ -27,22 +28,26 @@
     <div class="to-hide">
         <div class="action-buttons">
             <button class="action">+ New</button>
-            <button class="action">History</button>
+            <button class="action history">
+                <img src="https://cdn-icons-png.flaticon.com/512/14131/14131560.png" alt="">
+                History
+            </button>
         </div>
-
+        
         <div class="welcome-content">
-            <h1>Welcome to Lask AI Chat, your coding partner!</h1>
-            <p>Select the block of code that you're focusing on.</p>
-            <p>Then, you can either click on one of the actions listed below, type your request into the prompt area, or use the "/" command to quickly access specific actions.</p>
-            <p><a href="#">Check out the user guide</a></p>
+            <h1>Welcome to Lask AI Chat!</h1>
+
+            <p> Code Smarter, Not Harder</p>
+            <!-- <p>Then, you can either click on one of the actions listed below, type your request into the prompt area, or use the "/" command to quickly access specific actions.</p> -->
+            <p><a href="#">User Guide</a></p>
         </div>
 
-        <div class="action-list">
-            <button class="action-item" id="explain-code">/explain Code</button>
-            <button class="action-item" id="write-docstrings">/write docstrings for code</button>
-            <button class="action-item" id="generate-tests">/generate Test cases</button>
-            <button class="action-item" id="explore-codebase">/explore Codebase</button>
-            <button class="action-item" id="fix-code">/fix code</button>
+        <div class="action-listt">
+            <button class="action-itemm" id="explain-code">/explain Code</button>
+            <button class="action-itemm" id="write-docstrings">/write docstrings for code</button>
+            <button class="action-itemm" id="generate-tests">/generate Test cases</button>
+            <button class="action-itemm" id="explore-codebase">/explore Codebase</button>
+            <button class="action-itemm" id="fix-code">/fix code</button>
         </div>
     </div>
     
@@ -52,7 +57,7 @@
         <div class="input-container">
             <button class="action" id="/">/</button>
             <button class="action" id="@">@</button>
-            <textarea id="messageInput" placeholder="Type a message..."></textarea>     
+            <textarea id="messageInput" placeholder="Ask me anything..."></textarea>     
             <button id="sendButton">
                 <img src="https://cdn-icons-png.freepik.com/512/10023/10023342.png?ga=GA1.1.1597380606.1728277263" alt="Ask AI" />
             </button>
